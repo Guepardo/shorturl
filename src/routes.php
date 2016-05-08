@@ -1,12 +1,18 @@
 <?php
 use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
-require('/../vendor/classes/Link.php'); 
+require(ROOT.'/vendor/classes/Link.php'); 
 // Routes
 
 //Registrar um novo link, interface.
 $app->get("/shortit", function (Request $req, Response $res, $args){
 	return $this->renderer->render($res, 'home.phtml', $args); 
+}); 
+
+//Redirect para a interface de encurtamente do link.
+$app->get("/", function (Request $req, Response $res, $args){
+	header("Location: ". DOMAIN."shortit"); 
+	die(); 
 }); 
 
 //Resolver um link reduzido. 
