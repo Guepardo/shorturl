@@ -4,18 +4,26 @@ use \Psr\Http\Message\ResponseInterface as Response;
 require('/../vendor/classes/Link.php'); 
 // Routes
 
-// $app->get('/[{name}]', function ($request, $response, $args) {
-//     // Sample log message
-//     $this->logger->info("Slim-Skeleton '/' route");
-
-//     // Render index view
-//     return $this->renderer->render($response, 'index.phtml', $args);
-// });
-
-$app->get("/", function (Request $req, Response $res, $args){
+//Registrar um novo link, interface.
+$app->get("/shortit", function (Request $req, Response $res, $args){
 	return $this->renderer->render($res, 'home.phtml', $args); 
 }); 
 
+//Resolver um link reduzido. 
+$app->get("/{hash}", function(Request $req, Response $res, $args){
+	$hash = $req->getAttribute('hash'); 
+	$link = new Link(); 
+
+	$redirect = $link->find($hash);
+	if(!empty($redirect)){
+		header("Location: ". $redirect); 
+		die(); 
+	}
+	return $res->getBody()->write("Not Found!"); 
+});
+
+
+//Registrar um novo link
 $app->post("/register", function(Request $req, Response $res, $args){
 
 	if(isset($_POST['link']))

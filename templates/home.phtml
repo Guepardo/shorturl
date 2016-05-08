@@ -39,17 +39,17 @@
           <h1 class="center">Short your URL</h1>
           <div class="row">
           <div class="medium-12 medium-centered columns">
-              <form>
+            
                 <div class="row">
                   <div class="medium-9 columns">
-                    <input type="text" placeholder="exemplo.com.br" />
+                    <input id="link" type="text" placeholder="exemplo.com.br" />
                   </div> 
 
                   <div class="medium-3 columns">
-                    <button class="button">Short it!</button>
+                    <button id="button" class="button">Short it!</button>
                   </div> 
                 </div>
-              </form>
+             
             </div>
           </div>
           <p class="center"> Todos os direitos não reservados, 2016</p>
@@ -59,9 +59,24 @@
   </main>
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+  <script src="https://cdn.rawgit.com/alertifyjs/alertify.js/v1.0.10/dist/js/alertify.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/foundation/6.2.1/foundation.min.js"></script>
   <script>
     $(document).foundation();
+    $(document).ready(function(){
+      $("#button").click(function(){
+        var value = $('#link').val(); 
+
+        $.post('register', {link: value},
+          function(data){
+            var data = JSON.parse(data); 
+            console.log(data.status); 
+            if(data.status){
+              alertify.alert("Your short url is:<br> <b><i>"+window.location.origin+'/'+data.hash+"</i></b>"); 
+            }
+          }); 
+      }); 
+    }); 
   </script>
 </body>
 </html>
