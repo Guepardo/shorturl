@@ -13,11 +13,7 @@ require('/../vendor/classes/Link.php');
 // });
 
 $app->get("/", function (Request $req, Response $res, $args){
-	return $res->getBody()->write("Teste"); 
-}); 
-
-$app->get("/teste", function (Request $req, Response $res, $args){
-	return $res->getBody()->write("Teste"); 
+	return $this->renderer->render($res, 'home.phtml', $args); 
 }); 
 
 $app->post("/register", function(Request $req, Response $res, $args){
