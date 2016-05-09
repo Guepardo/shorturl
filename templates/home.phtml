@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Foundation Starter Template</title>
+  <title>Cuturl</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/foundation/6.2.1/foundation.min.css" />
 
   <style type="text/css">
@@ -64,6 +64,7 @@
   <script>
     $(document).foundation();
     $(document).ready(function(){
+
       $("#button").click(function(){
         var value = $('#link').val(); 
 
@@ -72,11 +73,25 @@
             var data = JSON.parse(data); 
             console.log(data.status); 
             if(data.status){
-              alertify.alert("Your short url is:<br> <b><i>"+window.location.origin+'/'+data.hash+"</i></b>"); 
+              alertify.alert("Your short url is:<br> <b><i>"+window.location.origin+'/'+data.hash+"</i></b><br><br>"+calcReduction(value)); 
             }
           }); 
       }); 
     }); 
+
+     function calcReduction(value){
+        var length       = value.length; 
+        var lengthDomain = window.location.origin;
+        lengthDomain = lengthDomain.length+ 8;  
+
+        if(length <= lengthDomain)
+          return "0% reduction."; 
+        
+        var result = (1-(lengthDomain/length)) * 100; 
+        result     = parseFloat(result.toFixed(2)); 
+
+        return ""+result+"% reduction.";  
+      };
   </script>
 </body>
 </html>
